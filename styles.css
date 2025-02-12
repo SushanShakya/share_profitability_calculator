@@ -1,0 +1,66 @@
+#floating-box {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 400px;
+  padding: 15px;
+  background-color: rgba(0, 0, 0, 0.8);
+  color: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 10000;
+  font-family: Arial, sans-serif;
+}
+
+#floating-box h3 {
+  margin: 0;
+  font-size: 18px;
+  margin-bottom: 10px;
+  text-align: center;
+}
+
+#floating-box label {
+  font-size: 14px;
+  display: block;
+  margin-bottom: 5px;
+}
+
+#floating-box input {
+  width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+#floating-box button {
+  width: 100%;
+  padding: 10px;
+  background-color: #4caf50;
+  color: white;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
+
+#floating-box button:hover {
+  background-color: #45a049;
+}
+
+#floating-box p {
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  text-align: left;
+}
+
+#floating-box .profit {
+  color: yellowgreen;
+}
+
+#floating-box .loss {
+  color: red;
+}

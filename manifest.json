@@ -2,6 +2,9 @@
     "manifest_version": 2,
     "version": "1.0",
     "name": "Share Profitability Point Calculator",
+    "permissions": [
+        "activeTab"
+    ],
     "content_scripts": [
         {
             "matches": [
@@ -9,6 +12,9 @@
             ],
             "js": [
                 "main.js"
+            ],
+            "css": [
+                "styles.css"
             ],
             "type": "module"
         }
