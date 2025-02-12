@@ -1,0 +1,23 @@
+{
+  "name": "share_profitability_calculator",
+  "version": "1.0.0",
+  "description": "Calculate the point where the Stock will be profitable",
+  "main": "main.js",
+  "type": "module",
+  "files": [
+    "src/**"
+  ],
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "jest",
+    "start": "node main.js"
+  },
+  "keywords": [
+    "share",
+    "nepse"
+  ],
+  "author": "Sushan Shakya",
+  "license": "MIT"
+}
