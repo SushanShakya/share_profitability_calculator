@@ -10,13 +10,42 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 10000;
   font-family: Arial, sans-serif;
+  transition: height 0.3s ease, padding 0.3s ease;
 }
 
-#floating-box h3 {
+#minimize-btn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  padding: 5px;
+  background: none;
+}
+
+#minimize-btn h3 {
   margin: 0;
   font-size: 18px;
-  margin-bottom: 10px;
   text-align: center;
+  flex-grow: 1;
+}
+
+/* #minimize-btn {
+  cursor: pointer;
+  font-size: 18px;
+} */
+
+#floating-content {
+  padding-top: 10px;
+}
+
+#floating-box.collapsed {
+  /* height: 40px; */
+  padding: 5px 15px;
+  overflow: hidden;
+}
+
+#floating-box.collapsed #floating-content {
+  display: none;
 }
 
 #floating-box label {

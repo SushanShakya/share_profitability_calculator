@@ -61,11 +61,15 @@ class ExpectedProfitabilityInteractor {
     return this.buyPrice * this.n;
   }
 
-  computeExpectedProfits() {
-    let sI = new SellPriceInteractor(this.expectedSellPrice * this.n);
+  receivableAmount() {
     let buyAmountAfterCharges = this.bI.calculateBuyPrice();
+    let sI = new SellPriceInteractor(this.expectedSellPrice * this.n);
+    return sI.computeReceivableAmount(buyAmountAfterCharges);
+  }
+
+  computeExpectedProfits() {
     let buyAmount = this.bI.calculateAmountRequiredToBuy();
-    let sellPrice = sI.computeReceivableAmount(buyAmountAfterCharges);
+    let sellPrice = this.receivableAmount();
 
     return sellPrice - buyAmount;
   }
@@ -148,27 +152,46 @@ class SellPriceInteractor {
 
 let defaultProfitExpected = 100;
 
+// Create floating box
+// Create floating box
 const floatingBox = document.createElement("div");
 floatingBox.id = "floating-box";
-
-// HTML structure for the floating box
 floatingBox.innerHTML = `
-  <h3>Share Price Calculator</h3>
-  <label for="current-share-price">Current Share Price</label>
-  <input type="number" id="current-share-price" value="500" />
+  <div id="minimize-btn">
+    <h3>Share Price Calculator</h3>
+    <span>🔽</span>
+  </div>
+  <div id="floating-content">
+    <label for="current-share-price">Current Share Price</label>
+    <input type="number" id="current-share-price" value="500" />
 
-  <label for="kitta">No of Kitta</label>
-  <input type="number" id="kitta" value="100" />
+    <label for="kitta">No of Kitta</label>
+    <input type="number" id="kitta" value="100" />
 
-  <label for="expected-share-price">Expected Share Price</label>
-  <input type="number" id="expected-share-price" value="600" />
+    <label for="expected-share-price">Expected Share Price</label>
+    <input type="number" id="expected-share-price" value="600" />
 
-  <button id="calculate-button">Calculate</button>
-  <p id="result"></p>
+    <button id="calculate-button">Calculate</button>
+    <p id="result"></p>
+  </div>
 `;
 
-// Append the box to the body
+// Append to body
 document.body.appendChild(floatingBox);
+
+// Minimize button functionality
+document.getElementById("minimize-btn").addEventListener("click", () => {
+  floatingBox.classList.toggle("collapsed");
+  localStorage.setItem(
+    "floatingBoxCollapsed",
+    floatingBox.classList.contains("collapsed")
+  );
+});
+
+// Load previous minimized state
+if (localStorage.getItem("floatingBoxCollapsed") === "true") {
+  floatingBox.classList.add("collapsed");
+}
 
 // Add event listener for the Calculate button
 document
@@ -186,16 +209,28 @@ function onCalculateClick() {
   calculate(currentSharePrice, noOfShares, expectedSharePrice);
 }
 
-function outputToDocument(buyPrice, sellSharePrice, expectedProfit, roi) {
+function outputToDocument(
+  buyPrice,
+  sellSharePrice,
+  expectedSellPrice,
+  expectedProfit,
+  roi,
+  receivableAmount
+) {
   let cs = expectedProfit >= 0 ? "profit" : "loss";
   document.getElementById("result").innerHTML = `
   <div>
       <b>Buy Amount</b>: <span class="profit"> Rs. ${buyPrice}</span><br>
       <b>Stock Profitable at</b>: <span class="profit">Rs. ${sellSharePrice}</span> <br>
+      <hr style="border-top: 1px solid white;">
+      When sold at <span class="profit">${expectedSellPrice}</span><br>
       <b>Expected Profit</b>: <span class="${cs}">Rs. ${expectedProfit.toFixed(
     2
   )}</span><br>
       <b>ROI</b>: <span class="${cs}">${roi.toFixed(2)}%</span><br>
+      <b>Receivable Amount</b>: <span class="profit"> Rs. ${receivableAmount.toFixed(
+        2
+      )}</span><br>
   </div>
   `;
 }
@@ -232,8 +267,16 @@ function calculate(currentSharePrice, noOfShares, expectedSellPrice) {
 
   let expectedProfit = i2.computeExpectedProfits();
   let roi = i2.computeROI() * 100;
+  let receivableAmount = i2.receivableAmount();
 
-  outputToDocument(buyPrice, sellSharePrice, expectedProfit, roi);
+  outputToDocument(
+    buyPrice,
+    sellSharePrice,
+    expectedSellPrice,
+    expectedProfit,
+    roi,
+    receivableAmount
+  );
 
   outputToConsole(
     noOfShares,
