@@ -8,7 +8,8 @@
     "content_scripts": [
         {
             "matches": [
-                "https://www.nepsealpha.com/nepse-chart*"
+                "https://www.nepsealpha.com/nepse-chart*",
+                "https://nepsealpha.com/nepse-chart*"
             ],
             "js": [
                 "main.js"
